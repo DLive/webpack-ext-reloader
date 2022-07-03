@@ -16,15 +16,15 @@ export function extractEntries(
     throw new Error("Please specify the `output.filename` in your webpack config.");
   }
 
-  if (!background?.scripts) {
-    throw new TypeError(bgScriptManifestRequiredMsg.get());
-  }
+  // if (!background?.scripts) {
+  //   throw new TypeError(bgScriptManifestRequiredMsg.get());
+  // }
 
-  const bgScriptFileNames = background.scripts;
+  const bgScriptFileNames = background?.service_worker;
   const toRemove = (filename as string).replace("[name]", "");
 
-  const bgWebpackEntry = Object.keys(webpackEntry).find((entryName) =>
-    bgScriptFileNames.some((bgManifest) => bgManifest.replace(toRemove, "") === entryName),
+  const bgWebpackEntry = Object.keys(webpackEntry).find(
+    (entryName) => bgScriptFileNames?.replace(toRemove, "") === entryName,
   );
 
   if (!bgWebpackEntry) {
